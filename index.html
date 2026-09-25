@@ -194,6 +194,8 @@
   .cal-chip{display:block;width:100%;text-align:left;font-family:inherit;font-size:12px;font-weight:600;color:var(--ink);background:color-mix(in srgb, var(--c) 14%, var(--card));border:none;border-left:3px solid var(--c);border-radius:6px;padding:4px 7px;margin-bottom:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .cal-empty{font-size:11.5px;color:var(--ink-soft);}
   .cal-mark{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;background:color-mix(in srgb, var(--blue) 15%, transparent);color:var(--blue);margin:0 3px 4px 0;}
+  .cal-mark.mk{background:color-mix(in srgb, #E0A800 18%, transparent);color:#8a6500;}
+  .cal-mark.ev{background:color-mix(in srgb, var(--blue) 12%, transparent);color:var(--blue);}
   .cal-mark.due{background:color-mix(in srgb, var(--coral) 15%, transparent);color:var(--coral);}
   .cal-month{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
   .cal-mh{font-size:11px;font-weight:700;color:var(--ink-soft);text-align:center;padding:4px 0;}
@@ -295,6 +297,87 @@
   .profile-sec:first-of-type{margin-top:8px;padding-top:0;border-top:none;}
   .care-box{background:color-mix(in srgb, var(--coral) 7%, var(--card));border:1px solid color-mix(in srgb, var(--coral) 25%, var(--line));border-radius:10px;padding:10px 12px;}
   @media (max-width:560px){ .profile-grid{grid-template-columns:1fr;gap:2px;} .profile-grid .k{padding-top:8px;} }
+  .main-nav .tab-btn{position:relative;}
+  .sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .sc-filters{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 14px;}
+  .sc-f{font-family:inherit;font-size:12px;font-weight:700;border:1.5px solid var(--line);background:var(--card);color:var(--ink-soft);border-radius:20px;padding:5px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;opacity:.55;}
+  .sc-f.on{opacity:1;color:var(--ink);}
+  .sc-f i, .sc-dots i{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  i.evt{background:var(--blue);} i.act{background:#2E9C8F;} i.ddl{background:#8E6CCF;} i.hol{background:var(--coral);} i.bday{background:#F28C28;} i.lcm{background:var(--green);} i.mku{background:#E0A800;}
+  .sc-band{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .sc-band.off{font-size:12px;color:var(--ink-soft);}
+  .lcpill{display:inline-block;background:color-mix(in srgb, var(--green) 14%, var(--card));color:color-mix(in srgb, var(--green) 60%, var(--ink));border-radius:10px;padding:5px 10px;font-weight:800;font-size:12.5px;}
+  .lcpill small{font-weight:600;font-size:11.5px;}
+  .lcpill.cur{box-shadow:inset 0 0 0 1.5px var(--green);}
+  .sc-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+  .sc-h{font-size:11px;font-weight:700;color:var(--ink-soft);text-align:center;padding:2px 0 4px;}
+  .sc-cell{background:var(--bg);border:1px solid var(--line);border-radius:10px;min-height:104px;padding:6px;overflow:hidden;cursor:pointer;}
+  .sc-cell.out{opacity:.35;cursor:default;}
+  .sc-cell.today{border-color:var(--blue);box-shadow:0 0 0 2px color-mix(in srgb, var(--blue) 22%, transparent);}
+  .sc-cell.noclass{background:color-mix(in srgb, var(--coral) 6%, var(--bg));}
+  .sc-d{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:12.5px;margin-bottom:4px;}
+  .sc-add{border:none;background:none;color:var(--ink-soft);font-size:15px;line-height:1;cursor:pointer;opacity:0;padding:0 2px;}
+  .sc-cell:hover .sc-add{opacity:1;}
+  .sc-it{font-size:11px;font-weight:700;padding:3px 6px;border-radius:6px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;border-left:3px solid;}
+  .sc-it.evt{background:color-mix(in srgb, var(--blue) 12%, var(--card));border-color:var(--blue);color:color-mix(in srgb, var(--blue) 70%, var(--ink));}
+  .sc-it.act{background:color-mix(in srgb, #2E9C8F 12%, var(--card));border-color:#2E9C8F;color:#1f6f66;}
+  .sc-it.ddl{background:color-mix(in srgb, #8E6CCF 12%, var(--card));border-color:#8E6CCF;color:#6a4db0;}
+  .sc-it.hol{background:color-mix(in srgb, var(--coral) 13%, var(--card));border-color:var(--coral);color:var(--coral);}
+  .sc-it.bday{background:color-mix(in srgb, #F28C28 13%, var(--card));border-color:#F28C28;color:#b3601a;}
+  .sc-it.lcm{background:color-mix(in srgb, var(--green) 14%, var(--card));border-color:var(--green);color:color-mix(in srgb, var(--green) 60%, var(--ink));}
+  .sc-it.mku{background:color-mix(in srgb, #E0A800 16%, var(--card));border-color:#E0A800;color:#8a6500;}
+  .sc-more{font-size:11px;color:var(--blue);font-weight:700;cursor:pointer;}
+  .sc-dots{display:none;gap:3px;flex-wrap:wrap;margin-top:4px;}
+  .sc-month{padding:12px 0;border-top:1px solid var(--line);}
+  .sc-month:first-child{border-top:none;padding-top:0;}
+  .sc-mh{font-weight:800;font-size:14px;margin-bottom:8px;}
+  .sc-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+  .sc-row .sc-it{margin:0;display:inline-block;max-width:100%;white-space:normal;}
+  .sc-date{width:110px;flex:none;font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .sy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px 16px;}
+  .sy-row{display:flex;align-items:center;gap:8px;font-size:12.5px;}
+  .sy-row b{width:66px;flex:none;} .sy-row input{flex:1;min-width:0;}
+  .home-up{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .home-up h4{margin:0 0 10px;font-size:13px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px;}
+  .up-row{display:flex;gap:10px;align-items:center;margin-bottom:6px;font-size:13px;}
+  .up-row .d{width:92px;flex:none;color:var(--ink-soft);font-weight:700;font-size:12px;}
+  .up-row .sc-it{margin:0;white-space:normal;}
+  .tl-short{display:none;}
+  /* ---------- phones ---------- */
+  @media (max-width:640px){
+    .wrap{padding:18px 14px calc(96px + env(safe-area-inset-bottom, 0px));}
+    h1{font-size:18px;margin-top:8px;}
+    .logo-row img{height:44px !important;width:auto;}
+    .badge{display:none;}
+    .main-nav{position:fixed;left:0;right:0;bottom:0;z-index:40;margin:0;background:color-mix(in srgb, var(--card) 96%, transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:none;padding:6px 4px calc(6px + env(safe-area-inset-bottom, 0px));flex-wrap:nowrap;gap:0;box-shadow:0 -2px 12px rgba(0,0,0,.05);}
+    .main-nav .tab-btn{flex:1;min-width:0;padding:6px 0 4px;font-size:10.5px;border-bottom:none;border-radius:10px;line-height:1.1;}
+    .main-nav .tab-btn .tb-ic{display:block;margin:0 auto 3px;width:20px;height:20px;}
+    .main-nav .tab-btn.active{background:color-mix(in srgb, var(--blue) 10%, transparent);}
+    .main-nav .tl-long{display:none;} .main-nav .tl-short{display:inline;}
+    .main-nav .badge-n{position:absolute;margin:0;transform:translate(4px,-26px);font-size:9.5px;padding:0 5px;min-width:15px;}
+    .main-nav .tab-btn{position:relative;}
+    .sub-nav{margin-top:10px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;}
+    .sub-nav .sub-btn{min-width:auto !important;flex:none;padding:8px 12px;white-space:nowrap;}
+    .panel.active{padding-top:14px;}
+    .card{padding:16px 16px;border-radius:14px;margin-bottom:14px;}
+    .field-row{flex-direction:column;gap:10px;}
+    .field-row > .field{width:100%;}
+    .modal-overlay{padding:0;align-items:flex-end;}
+    .modal, .modal.wide{max-width:100%;width:100%;max-height:92vh;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom, 0px));}
+    .modal-close-row{flex-wrap:wrap;}
+    .modal-close-row .btn{flex:1;}
+    .arch-row, .alert-row{flex-direction:column;align-items:stretch;}
+    .arch-row .actions, .alert-row .actions{justify-content:flex-start;}
+    .cal-bar{gap:8px;}
+    .sc-cell{min-height:54px;padding:4px;border-radius:8px;}
+    .sc-items{display:none;} .sc-dots{display:flex;}
+    .sc-add{display:none;}
+    .sc-date{width:auto;}
+    .sc-top .btn-row{width:100%;}
+    .up-row .d{width:74px;}
+    .home-head{flex-direction:column;align-items:flex-start;gap:2px;}
+    input, select, textarea{font-size:16px !important;}
+  }
   #login{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;}
   #login.hidden{display:none;}
   #login .box{max-width:380px;width:100%;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px;box-shadow:0 6px 24px rgba(0,0,0,.08);}
@@ -357,11 +440,12 @@
   </div>
 
   <div class="tabs main-nav">
-    <button class="tab-btn active" data-tab="home"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Home</button>
-    <button class="tab-btn" data-tab="sched"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Class Schedule</button>
-    <button class="tab-btn" data-tab="directory"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.6c2.8.2 5 2.1 5 5.4"/></svg>Family Directory</button>
-    <button class="tab-btn" data-tab="finance"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>Finance<span class="badge-n" id="fin-badge" style="display:none;"></span></button>
-    <button class="tab-btn" data-tab="settings"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+    <button class="tab-btn active" data-tab="home" data-short="Home"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span class="tl-long">Home</span><span class="tl-short">Home</span></button>
+    <button class="tab-btn" data-tab="sched" data-short="Classes"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span class="tl-long">Class Schedule</span><span class="tl-short">Classes</span></button>
+    <button class="tab-btn" data-tab="schoolcal" data-short="Calendar"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M12 13.2l1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3z"/></svg><span class="tl-long">School Calendar</span><span class="tl-short">Calendar</span></button>
+    <button class="tab-btn" data-tab="directory" data-short="Families"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.6c2.8.2 5 2.1 5 5.4"/></svg><span class="tl-long">Family Directory</span><span class="tl-short">Families</span></button>
+    <button class="tab-btn" data-tab="finance" data-short="Finance"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg><span class="tl-long">Finance</span><span class="tl-short">Finance</span><span class="badge-n" id="fin-badge" style="display:none;"></span></button>
+    <button class="tab-btn" data-tab="settings" data-short="Settings"><svg class="tb-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span class="tl-long">Settings</span><span class="tl-short">Settings</span></button>
   </div>
   <div class="sub-nav" id="sched-nav" style="display:none;">
     <button class="tab-btn sub-btn" data-tab="schedule">Calendar</button>
@@ -383,6 +467,41 @@
       <div class="home-head"><h2>Good day, Teacher!</h2><span class="d" id="h-date"></span></div>
       <div class="stats" id="h-stats"></div>
       <div class="prog-mix" id="h-progs"></div>
+      <div class="home-up" id="h-up"></div>
+    </div>
+  </div>
+
+  <!-- SCHOOL CALENDAR -->
+  <div class="panel" id="schoolcal">
+    <div class="card">
+      <div class="sc-top">
+        <div>
+          <h3 style="margin:0;">School Calendar</h3>
+          <p class="hint" id="sc-count" style="margin:2px 0 0;"></p>
+        </div>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn small solid" id="sc-addone">+ Add event</button>
+          <button class="btn small" id="sc-bulk">Add many</button>
+          <button class="btn small" id="sc-ph">PH holidays</button>
+          <button class="btn small" id="sc-setup">Class days &amp; LCs</button>
+        </div>
+      </div>
+      <div class="cal-bar" style="margin-top:14px;">
+        <div style="display:flex;gap:6px;align-items:center;" id="sc-nav">
+          <button class="btn small" id="sc-prev" aria-label="Previous month">‹</button>
+          <button class="btn small" id="sc-today">Today</button>
+          <button class="btn small" id="sc-next" aria-label="Next month">›</button>
+        </div>
+        <span class="t" id="sc-title"></span>
+        <div class="seg"><button class="cal-view-btn sc-view-btn" data-v="month">Month</button><button class="cal-view-btn sc-view-btn" data-v="year">Whole year</button></div>
+      </div>
+      <div class="sc-filters">
+        <button class="sc-f" data-f="event"><i class="evt"></i>Events</button>
+        <button class="sc-f" data-f="holiday"><i class="hol"></i>Holidays &amp; breaks</button>
+        <button class="sc-f" data-f="birthday"><i class="bday"></i>Birthdays</button>
+        <button class="sc-f" data-f="lc"><i class="lcm"></i>Learning cycles</button>
+      </div>
+      <div id="sc-body"></div>
     </div>
   </div>
 
@@ -902,6 +1021,7 @@ function renderTab(tab){
     if(btn.dataset.tab === 'soa'){ if(!draft.parent && !draft.student && !draft.lines.length) draft = blankDraft(); renderSoaForm(); }
     if(btn.dataset.tab === 'home') renderHome();
     if(btn.dataset.tab === 'schedule') renderCalendar();
+    if(btn.dataset.tab === 'schoolcal') renderSchoolCal();
     if(btn.dataset.tab === 'attendance'){ renderAttendance(); renderAttSummary(); }
     if(btn.dataset.tab === 'directory') renderDirectory();
     if(btn.dataset.tab === 'archive') renderArchive();
@@ -2024,18 +2144,16 @@ function renderDirectory(){
   document.getElementById('d-count').textContent = items.length + ' of ' + Dir.list.length + ' student' + (Dir.list.length === 1 ? '' : 's');
   if(!items.length){ list.innerHTML = `<p class="empty">${Dir.list.length ? 'No matches.' : 'No students yet — add one below.'}</p>`; return; }
   list.innerHTML = items.map(s => {
-    const meta = [s.program, studentDays(s).length ? studentDays(s).join(', ') + (studentTime(s) ? ' · ' + studentTime(s) : '') : s.schedule, s.paymentTerms].filter(Boolean).map(escapeHtml).join(' · ');
-    const tags = [s.studentType ? `<span class="tag">${escapeHtml(s.studentType)}</span>` : '',
-                  resvText(s.reservation) ? `<span class="tag green">Reservation ${resvText(s.reservation)}</span>` : ''].join('');
+    const meta = [s.program, studentDays(s).length ? studentDays(s).join(', ') + (studentTime(s) ? ' · ' + studentTime(s) : '') : s.schedule].filter(Boolean).map(escapeHtml).join(' · ');
+    const tags = [s.studentType ? `<span class="tag">${escapeHtml(s.studentType)}</span>` : '', !isActive(s) ? `<span class="tag grey">${escapeHtml(s.status)}</span>` : ''].join('');
     return `<div class="arch-row">
       <div class="arch-main">
-        <div><button class="linkish name-link" onclick="openStudentProfile('${s.id}')">${escapeHtml(s.student)}</button>${s.nickname ? ' <span class="arch-meta">“' + escapeHtml(s.nickname) + '”</span>' : ''}${ageText(s.birthdate) ? ' <span class="arch-meta">· ' + ageText(s.birthdate) + '</span>' : ''} ${tags} ${hasCareNote(s) ? '<span class="tag red" title="Health or care note on file">Care note</span>' : ''} ${studentFlags(s)}</div>
+        <div><button class="linkish name-link" onclick="openStudentProfile('${s.id}')">${escapeHtml(s.student)}</button>${s.nickname ? ' <span class="arch-meta">“' + escapeHtml(s.nickname) + '”</span>' : ''}${ageText(s.birthdate) ? ' <span class="arch-meta">· ' + ageText(s.birthdate) + '</span>' : ''} ${tags} ${hasCareNote(s) ? '<span class="tag red" title="Health or care note on file">Care note</span>' : ''}</div>
         <div class="arch-meta">${escapeHtml(s.parent || '')}${s.contact ? ' · ' + escapeHtml(s.contact) : ''}</div>
         ${meta ? `<div class="arch-meta">${meta}</div>` : ''}
       </div>
       <div class="actions">
-        <button class="btn small solid" onclick="startSoaFor('${s.id}')">Create SOA</button>
-        <button class="btn small" onclick="openStudentPayment('${s.id}')">Payments</button>
+        <button class="btn small" onclick="openStudentProfile('${s.id}')">View</button>
         <button class="btn small" onclick="openStudentForm('${s.id}')">Edit</button>
         <button class="btn small danger" onclick="confirmDeleteStudent('${s.id}')">Delete</button>
       </div>
@@ -2202,7 +2320,6 @@ function openStudentProfile(id){
         ${s.notes ? `<div class="profile-sec"><h4>Notes</h4><p style="margin:0;font-size:13.5px;">${escapeHtml(s.notes).replace(/\n/g,'<br>')}</p></div>` : ''}
         <div class="modal-close-row">
           <button class="btn" onclick="closeModal()">Close</button>
-          <button class="btn" onclick="closeModal();openStudentPayment('${s.id}')">Payments</button>
           <button class="btn solid" onclick="closeModal();openStudentForm('${s.id}')">Edit</button>
         </div>
       </div>
@@ -2240,7 +2357,7 @@ function allRerender(){
 async function initSharedStores(db){
   Soas.list = state.soa.archive.slice();
   if(state.cycle) Cycle.data = Object.assign(Cycle.data, state.cycle);
-  if(!db){ Soas.mode = 'local'; initAttendanceStore(null); initYearStore(null); allRerender(); return; }
+  if(!db){ Soas.mode = 'local'; initAttendanceStore(null); initYearStore(null); initCalendarStore(null); initSyStore(null); allRerender(); return; }
   Soas.db = db; Soas.mode = 'shared'; Cycle.db = db;
   // move any SOAs saved in this browser into shared storage
   const local = state.soa.archive.slice();
@@ -2259,6 +2376,8 @@ async function initSharedStores(db){
   initAttendanceStore(db);
   initYearStore(db);
   initSettingsSync(db);
+  initCalendarStore(db);
+  initSyStore(db);
   db.doc('config/cycle').onSnapshot(snap => {
     if(snap.exists) Cycle.data = Object.assign({ label:'', start:'', end:'', due:'', lcNo: null }, snap.data());
     renderCycleSettings(); allRerender();
@@ -2455,7 +2574,7 @@ function kidsOn(dateObj){
   const key = DAY_KEYS[dateObj.getDay()];
   const iso = dateObj.getFullYear()+'-'+pad2(dateObj.getMonth()+1)+'-'+pad2(dateObj.getDate());
   const c = Cycle.data;
-  return Dir.list.filter(s => isActive(s) && studentDays(s).includes(key))
+  return Dir.list.filter(s => isActive(s) && studentClassOn(s, iso))
     .map(s => s)
     .sort((a,b) => progRank(a.program) - progRank(b.program) || (a.program||'').localeCompare(b.program||'') || studentTime(a).localeCompare(studentTime(b)) || a.student.localeCompare(b.student));
 }
@@ -2474,10 +2593,15 @@ function calOpenWeek(iso){ const [y,m,d] = iso.split('-').map(Number); Cal.ancho
 
 function dayMarkers(iso){
   const out = [];
-  if(iso.endsWith('-15')) out.push('<span class="cal-mark due">Payments due</span>');
-  const c = Cycle.data;
-  if(c.start === iso) out.push(`<span class="cal-mark">${escapeHtml(c.label || 'Cycle')} starts</span>`);
-  if(c.end === iso) out.push(`<span class="cal-mark">${escapeHtml(c.label || 'Cycle')} ends</span>`);
+  const nc = typeof noClassEvent === 'function' ? noClassEvent(iso) : null;
+  if(nc) out.push(`<span class="cal-mark due">No classes · ${escapeHtml(nc.title.replace(/^no classes:?\s*/i, ''))}</span>`);
+  const mk = typeof makeupOn === 'function' ? makeupOn(iso) : null;
+  if(mk) out.push(`<span class="cal-mark mk">${escapeHtml(mk.label || 'Make-up class')}</span>`);
+  if(typeof syConfigured === 'function' && syConfigured()) (SYC.data.lcRanges || []).forEach(r => {
+    if(r.start === iso) out.push(`<span class="cal-mark">LC${r.n} begins</span>`);
+    if(r.end === iso) out.push(`<span class="cal-mark">LC${r.n} ends</span>`);
+  });
+  (typeof eventsOn === 'function' ? eventsOn(iso) : []).filter(e => !e.noClass).slice(0, 2).forEach(e => out.push(`<span class="cal-mark ev">${escapeHtml(e.title)}</span>`));
   return out.join('');
 }
 
@@ -2567,6 +2691,11 @@ function renderHome(){
   active.forEach(s => { const p = s.program || 'Other'; progCounts[p] = (progCounts[p] || 0) + 1; });
   document.getElementById('h-progs').innerHTML = Object.keys(progCounts).sort((a,b) => progRank(a) - progRank(b) || a.localeCompare(b))
     .map(p => `<span><i style="background:${progColor(p)}"></i>${escapeHtml(p.replace(/\s*(Playgroup|Class)$/i, ''))} <b>${progCounts[p]}</b></span>`).join('');
+  const up = typeof comingUp === 'function' ? comingUp(14) : [];
+  const todayNc = typeof noClassEvent === 'function' ? noClassEvent(isoToday()) : null;
+  document.getElementById('h-up').innerHTML = `<h4>Next two weeks</h4>` + (todayNc ? `<div class="up-row"><span class="d">Today</span><span class="sc-it hol">No classes · ${escapeHtml(todayNc.title)}</span></div>` : '') +
+    (up.length ? up.slice(0, 8).map(u => `<div class="up-row"><span class="d">${u.iso === isoToday() ? 'Today' : escapeHtml(dateFromIso(u.iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }))}</span><span class="sc-it ${u.cls}" ${u.onclick ? `onclick="${u.onclick}"` : ''}>${escapeHtml(u.text)}</span></div>`).join('')
+      + (up.length > 8 ? `<button class="btn small" onclick="showTab('schoolcal')">See the School Calendar</button>` : '') : '<p class="empty" style="margin:0;">Nothing on the calendar.</p>');
 
   const cr = (Cycle.data.start && Cycle.data.end) ? [Cycle.data.start, Cycle.data.end] : [isoOf(new Date(now.getFullYear(), now.getMonth(), 1)), isoOf(new Date(now.getFullYear(), now.getMonth() + 1, 0))];
   const inRange = p => p.date >= cr[0] && p.date <= cr[1];
@@ -2793,6 +2922,8 @@ function renderAttendance(){
 
 /* ---------- summary / report ---------- */
 function scheduledDates(s, from, to){
+  const set = classDateSet(s);
+  if(set) return [...set].filter(iso => iso >= from && iso <= to).sort();
   const out = []; const days = studentDays(s); if(!days.length || !from || !to) return out;
   const d = dateFromIso(from), end = dateFromIso(to);
   while(d <= end){ if(days.includes(DAY_KEYS[d.getDay()])) out.push(isoOf(d)); d.setDate(d.getDate() + 1); }
@@ -2906,7 +3037,7 @@ function initAttendanceUi(){
 const LC_N = 9;
 function currentLC(){
   const c = Cycle.data;
-  if(c.lcNo === 'auto' || (c.lcNo == null && c.lc1Month)) return Math.max(1, Math.min(9, lcOfMonth(monthOf(isoToday()))));
+  if(c.lcNo === 'auto' || (c.lcNo == null && c.lc1Month)){ const byDate = typeof lcByDate === 'function' ? lcByDate(isoToday()) : null; return byDate || Math.max(1, Math.min(9, lcOfMonth(monthOf(isoToday())))); }
   if(c.lcNo) return Number(c.lcNo);
   const m = (c.label || '').match(/(\d+)/);
   return m ? Number(m[1]) : null;
@@ -3124,7 +3255,7 @@ async function yearLabelSave(label){
 function yearSnapshot(){
   const soaSettings = Object.assign({}, state.soa); delete soaSettings.archive;
   return { kind: 'ellabs-school-year', version: 1, label: Years.label, archivedAt: new Date().toISOString(),
-    students: Dir.list, soas: Soas.list, attendance: Att.byDate, cycle: Cycle.data,
+    students: Dir.list, soas: Soas.list, attendance: Att.byDate, cycle: Cycle.data, calendar: SC.events, schoolYear: SYC.data,
     settings: { programs: state.programs, global: state.global, soa: soaSettings } };
 }
 async function archiveStore(meta, json){
@@ -3254,7 +3385,13 @@ function fullYearSheets(snap){
   const att = attendanceRows(snap.students || [], snap.attendance || {});
   return [['Payment Status', paymentStatusRows(snap.students || [], snap.cycle)], ['Family Directory', directoryRows(snap.students || [])],
           ['SOAs', soaRows(snap.soas || [])], ['Payments received', paymentRows(snap.soas || [], snap.students || [])],
-          ['Attendance summary', att.sum], ['Attendance log', att.log]];
+          ['Attendance summary', att.sum], ['Attendance log', att.log], ['School Calendar', calendarRows(snap.calendar || [], snap.students || [])]];
+}
+function calendarRows(events, students){
+  const rows = [['Date','Until','Title','Type','No classes','Applies to','Time','Notes']];
+  events.slice().sort((a, b) => (a.start || '').localeCompare(b.start || '')).forEach(e => rows.push([e.start, e.end || '', e.title, (EV_TYPES[e.type] || EV_TYPES.other).label, e.noClass ? 'Yes' : '', (e.programs || []).join(', ') || 'Whole school', e.time || '', e.notes || '']));
+  (students || []).filter(s => s.birthdate).forEach(s => rows.push([s.birthdate, '', 'Birthday — ' + s.student, 'Birthday', '', s.program || '', '', '']));
+  return rows;
 }
 function safeName(s){ return (s || '').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, ' ').trim(); }
 function needXlsx(){ if(!window.XLSX){ notify('The Excel tool did not load — check your connection and reload, or choose CSV.'); return false; } return true; }
@@ -3811,6 +3948,395 @@ async function removeStudentPayment(sid, src, soaId, pid){
   openStudentPayment(sid);
 }
 
+/* ============================= SCHOOL-YEAR SESSIONS =============================
+   The actual class days for the year (from the ELLabs session calendar): learning-cycle
+   date ranges, Saturday module ranges, make-up classes, and the class-day list for each
+   schedule group. Saved to config/schoolyear. The class schedule, attendance and the
+   current LC all follow these dates. */
+const SYC = { data: null, db: null };
+const DAY_CODE = { Mon: 'M', Tue: 'T', Wed: 'W', Thu: 'Th', Fri: 'F', Sat: 'Sat', Sun: 'Su' };
+const SESSION_GROUPS = [['Kinder', 'Kindergarten (Tue–Fri)'], ['WThF', 'Weekday Wed, Thu & Fri (12 sessions)'], ['WF', 'Weekday Wed & Fri (8 sessions)'],
+                        ['ThF', 'Weekday Thu & Fri (8 sessions)'], ['WTh', 'Weekday Wed & Thu (8 sessions)'], ['Sat', 'Weekend — Saturdays (10 per module)']];
+const _classSetCache = new Map();
+function syConfigured(){ return !!(SYC.data && SYC.data.sessions && Object.keys(SYC.data.sessions).length); }
+function initSyStore(db){
+  SYC.data = state.schoolYear || null; _classSetCache.clear();
+  if(!db) return;
+  SYC.db = db;
+  db.doc('config/schoolyear').onSnapshot(snap => {
+    SYC.data = snap.exists ? snap.data() : null; _classSetCache.clear();
+    try{ renderSchoolCal(); }catch(e){} try{ renderCalendar(); }catch(e){} try{ renderHome(); }catch(e){}
+    try{ renderAttendance(); renderAttSummary(); }catch(e){}
+  }, () => {});
+}
+async function sySave(data){
+  SYC.data = data; _classSetCache.clear();
+  if(SYC.db){ try{ await SYC.db.doc('config/schoolyear').set(data); }catch(e){ notify('Could not save (' + (e.code || 'error') + ').'); return false; } }
+  else { state.schoolYear = data; saveState(); }
+  try{ renderSchoolCal(); renderCalendar(); renderHome(); }catch(e){}
+  return true;
+}
+function sessionKey(s){
+  if(isKinder(s)) return 'Kinder';
+  const order = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  return studentDays(s).slice().sort((a, b) => order.indexOf(a) - order.indexOf(b)).map(d => DAY_CODE[d] || d).join('');
+}
+function makeupOn(iso){ return syConfigured() ? (SYC.data.makeups || []).find(m => m.date === iso) || null : null; }
+function classDateSet(s){
+  if(!syConfigured()) return null;
+  const key = sessionKey(s); if(!key) return null;
+  if(_classSetCache.has(key)) return _classSetCache.get(key);
+  const S = SYC.data.sessions; let list = S[key];
+  if(!list){
+    const days = studentDays(s);
+    const wd = days.filter(d => d !== 'Sat' && d !== 'Sun');
+    const pool = [].concat(S.WThF || [], S.Kinder && wd.some(d => d === 'Tue' || d === 'Mon') ? S.Kinder : []);
+    list = [...new Set(pool)].filter(iso => {
+      const dow = DAY_KEYS[dateFromIso(iso).getDay()];
+      if(dow === 'Sat'){ const m = makeupOn(iso); return !!m && wd.includes(DAY_KEYS[dateFromIso(m.for).getDay()]); }
+      return wd.includes(dow);
+    });
+    if(days.includes('Sat')) list = list.concat(S.Sat || []);
+  }
+  const set = new Set(list); _classSetCache.set(key, set); return set;
+}
+function studentClassOn(s, iso){
+  const set = classDateSet(s);
+  if(set) return set.has(iso);
+  return studentDays(s).includes(DAY_KEYS[dateFromIso(iso).getDay()]) && !noClassEvent(iso, s.program);
+}
+function lcByDate(iso){
+  if(!syConfigured() || !(SYC.data.lcRanges || []).length) return null;
+  let n = 1; (SYC.data.lcRanges || []).forEach(r => { if(r.start <= iso) n = r.n; });
+  return n;
+}
+
+/* ---------- setup editor ---------- */
+function openSySetup(){
+  const d = SYC.data || { lcRanges: [], weekendModules: [], makeups: [], sessions: {} };
+  const lc = n => (d.lcRanges || []).find(r => r.n === n) || {};
+  const wm = k => (d.weekendModules || []).find(r => r.k === k) || {};
+  document.getElementById('modal-root').innerHTML = `<div class="modal-overlay" onclick="if(event.target===this) closeModal()"><div class="modal wide">
+    <h3>School-year class days</h3>
+    <p class="hint">These dates drive the class schedule, attendance and the current learning cycle. Holidays, breaks and events are added on the calendar itself.</p>
+    <h4 style="margin-top:14px;">Learning cycles (weekday classes)</h4>
+    <div class="sy-grid">${Array.from({ length: 9 }, (_, i) => i + 1).map(n => `<div class="sy-row"><b>LC${n}</b><input type="date" class="sy-lcs" data-n="${n}" value="${escapeHtml(lc(n).start || '')}"><span>to</span><input type="date" class="sy-lce" data-n="${n}" value="${escapeHtml(lc(n).end || '')}"></div>`).join('')}</div>
+    <h4 style="margin-top:14px;">Saturday modules</h4>
+    <div class="sy-grid">${[1, 2, 3].map(k => `<div class="sy-row"><b>Module ${k}</b><input type="date" class="sy-wms" data-k="${k}" value="${escapeHtml(wm(k).start || '')}"><span>to</span><input type="date" class="sy-wme" data-k="${k}" value="${escapeHtml(wm(k).end || '')}"></div>`).join('')}</div>
+    <h4 style="margin-top:14px;">Make-up classes</h4>
+    <div id="sy-mk">${(d.makeups || []).map(m => syMkRow(m)).join('')}</div>
+    <button class="btn small" type="button" onclick="document.getElementById('sy-mk').insertAdjacentHTML('beforeend', syMkRow({}))">+ Add make-up class</button>
+    <h4 style="margin-top:14px;">Class days per schedule</h4>
+    <p class="hint">Dates as YYYY-MM-DD, separated by commas or new lines. Children with other day combinations (e.g. Thursdays only) use the matching days from the Wed–Fri list, including make-up Saturdays.</p>
+    ${SESSION_GROUPS.map(([k, label]) => `<div class="field" style="margin-top:8px;"><label>${label} — <span class="sy-count" data-k="${k}">${((d.sessions || {})[k] || []).length}</span> days</label><textarea class="sy-sess" data-k="${k}" style="min-height:64px;font-size:12px;font-family:ui-monospace,Menlo,monospace;">${escapeHtml(((d.sessions || {})[k] || []).join(', '))}</textarea></div>`).join('')}
+    <div class="modal-close-row"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn solid" id="sy-save">Save</button></div>
+  </div></div>`;
+  document.querySelectorAll('.sy-sess').forEach(t => t.addEventListener('input', () => { document.querySelector(`.sy-count[data-k="${t.dataset.k}"]`).textContent = (t.value.match(/\d{4}-\d{2}-\d{2}/g) || []).length; }));
+  document.getElementById('sy-save').addEventListener('click', async () => {
+    const lcRanges = [...document.querySelectorAll('.sy-lcs')].map(i => ({ n: +i.dataset.n, start: i.value, end: document.querySelector(`.sy-lce[data-n="${i.dataset.n}"]`).value })).filter(r => r.start && r.end);
+    const weekendModules = [...document.querySelectorAll('.sy-wms')].map(i => ({ k: +i.dataset.k, start: i.value, end: document.querySelector(`.sy-wme[data-k="${i.dataset.k}"]`).value })).filter(r => r.start && r.end);
+    const makeups = [...document.querySelectorAll('#sy-mk .mk-row')].map(r => ({ date: r.querySelector('.mk-d').value, for: r.querySelector('.mk-f').value, label: r.querySelector('.mk-l').value.trim() })).filter(m => m.date && m.for);
+    const sessions = {}; document.querySelectorAll('.sy-sess').forEach(t => { const l = [...new Set(t.value.match(/\d{4}-\d{2}-\d{2}/g) || [])].sort(); if(l.length) sessions[t.dataset.k] = l; });
+    if(await sySave(Object.assign({}, SYC.data || {}, { label: Years.label, lcRanges, weekendModules, makeups, sessions }))){ closeModal(); notify('School-year class days saved.'); }
+  });
+}
+function syMkRow(m){
+  return `<div class="line-row mk-row"><input type="date" class="mk-d" value="${escapeHtml(m.date || '')}" title="Make-up date" style="flex:1;"><span class="arch-meta">for</span>
+    <input type="date" class="mk-f" value="${escapeHtml(m.for || '')}" title="Replaces this class day" style="flex:1;"><input type="text" class="mk-l" placeholder="Label" value="${escapeHtml(m.label || '')}" style="flex:2;">
+    <button class="btn small danger" type="button" onclick="this.parentElement.remove()">✕</button></div>`;
+}
+
+/* ---------- coming up (home) ---------- */
+function comingUp(days){
+  const out = []; const t = new Date();
+  for(let i = 0; i <= days; i++){
+    const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() + i); const iso = isoOf(d);
+    eventsOn(iso).filter(e => e.start === iso || i === 0).forEach(e => out.push({ iso, cls: (EV_TYPES[e.type] || EV_TYPES.other).cls, text: e.title + (e.end && e.end !== e.start ? ' (until ' + dateFromIso(e.end).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ')' : ''), onclick: `openCalEvent('${e.id}')` }));
+    const mk = makeupOn(iso); if(mk) out.push({ iso, cls: 'mku', text: mk.label || 'Make-up class' });
+    birthdaysOn(iso).forEach(s => out.push({ iso, cls: 'bday', text: '🎂 ' + (s.nickname || s.student.split(' ')[0]) + '’s birthday', onclick: `openStudentProfile('${s.id}')` }));
+    if(syConfigured()) (SYC.data.lcRanges || []).filter(r => r.start === iso).forEach(r => out.push({ iso, cls: 'lcm', text: 'LC' + r.n + ' begins' }));
+  }
+  return out;
+}
+
+/* ============================= SCHOOL CALENDAR =============================
+   School-year events, holidays and no-class days (entered by staff), plus
+   automatic items: student birthdays, learning cycles, payment due dates (15th)
+   and SOA send-by dates (last Friday). Events are saved to calendar/<id>. */
+const SC = { events: [], db: null, anchor: new Date(), view: 'month', filters: { event: true, holiday: true, birthday: true, lc: true } };
+const EV_TYPES = {
+  holiday: { label: 'Holiday', cls: 'hol', noClass: true },
+  noclass: { label: 'No classes / break', cls: 'hol', noClass: true },
+  event:   { label: 'School event', cls: 'evt', noClass: false },
+  activity:{ label: 'Class activity', cls: 'act', noClass: false },
+  meeting: { label: 'Parent / staff meeting', cls: 'act', noClass: false },
+  deadline:{ label: 'Deadline / reminder', cls: 'ddl', noClass: false },
+  other:   { label: 'Other', cls: 'evt', noClass: false }
+};
+const PH_HOLIDAYS_SY2627 = [
+  ['2026-06-12','Independence Day','Regular holiday'],
+  ['2026-08-21','Ninoy Aquino Day','Special non-working day'],
+  ['2026-08-31','National Heroes Day','Regular holiday'],
+  ['2026-11-01','All Saints\u2019 Day','Special non-working day'],
+  ['2026-11-02','All Souls\u2019 Day','Special non-working day'],
+  ['2026-11-30','Bonifacio Day','Regular holiday'],
+  ['2026-12-08','Feast of the Immaculate Conception','Special non-working day'],
+  ['2026-12-24','Christmas Eve','Special non-working day'],
+  ['2026-12-25','Christmas Day','Regular holiday'],
+  ['2026-12-30','Rizal Day','Regular holiday'],
+  ['2026-12-31','Last Day of the Year','Special non-working day'],
+  ['2027-01-01','New Year\u2019s Day','Regular holiday'],
+  ['2027-02-06','Chinese New Year','Special non-working day'],
+  ['2027-03-25','Maundy Thursday','Regular holiday'],
+  ['2027-03-26','Good Friday','Regular holiday'],
+  ['2027-03-27','Black Saturday','Special non-working day'],
+  ['2027-04-09','Araw ng Kagitingan','Regular holiday']
+];
+
+function initCalendarStore(db){
+  SC.events = (state.calendar || []).slice();
+  if(!db){ renderSchoolCal(); return; }
+  SC.db = db;
+  db.collection('calendar').onSnapshot(snap => {
+    SC.events = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
+    renderSchoolCal(); try{ renderCalendar(); }catch(e){} try{ renderHome(); }catch(e){} try{ renderAttendance(); renderAttSummary(); }catch(e){}
+  }, () => {});
+}
+async function calSave(ev){
+  if(SC.db){ const { id, ...data } = ev; try{ await SC.db.collection('calendar').doc(id).set(data); return true; }catch(e){ notify('Could not save (' + (e.code || 'error') + ').'); return false; } }
+  state.calendar = (state.calendar || []).filter(x => x.id !== ev.id).concat([ev]); saveState(); SC.events = state.calendar.slice();
+  renderSchoolCal(); try{ renderCalendar(); }catch(e){} return true;
+}
+async function calDelete(id){
+  if(SC.db){ try{ await SC.db.collection('calendar').doc(id).delete(); }catch(e){ notify('Could not delete (' + (e.code || 'error') + ').'); } return; }
+  state.calendar = (state.calendar || []).filter(x => x.id !== id); saveState(); SC.events = state.calendar.slice(); renderSchoolCal();
+}
+
+/* ---------- queries ---------- */
+function eventsOn(iso){ return SC.events.filter(e => e.start && iso >= e.start && iso <= (e.end || e.start)); }
+function noClassEvent(iso, program){
+  return eventsOn(iso).find(e => e.noClass && (!e.programs || !e.programs.length || !program || e.programs.includes(program))) || null;
+}
+function birthdaysOn(iso){
+  const md = iso.slice(5);
+  return Dir.list.filter(s => isActive(s) && s.birthdate && s.birthdate.slice(5) === md);
+}
+function schoolYearRange(){
+  const starts = SC.events.map(e => e.start), ends = SC.events.map(e => e.end || e.start);
+  if(syConfigured()){ (SYC.data.lcRanges || []).forEach(r => { starts.push(r.start); ends.push(r.end); }); }
+  if(!starts.length) return { from: addMonthsYM(lcMonth(1), -1), to: addMonthsYM(lcMonth(LC_N), 1) };
+  const lo = starts.sort()[0], hi = ends.sort().slice(-1)[0];
+  const y0 = dateFromIso(lcMonth(1) + '-01').getFullYear();
+  const from = monthOf(lo) < (y0 + '-06') ? (y0 + '-06') : monthOf(lo);
+  return { from, to: monthOf(hi) };
+}
+function lcRangesInMonth(ym){
+  if(!syConfigured()) { const n = lcOfMonth(ym); return n >= 1 && n <= LC_N ? [{ n, start: ym + '-01', end: ym + '-28' }] : []; }
+  return (SYC.data.lcRanges || []).filter(r => monthOf(r.start) <= ym && monthOf(r.end) >= ym);
+}
+function billingMarks(iso){
+  const out = []; const ym = monthOf(iso); const n = lcForIso(iso);
+  if(iso.endsWith('-15') && n) out.push({ kind: 'due', text: 'Tuition due (LC' + n + ')' });
+  const next = addMonthsYM(ym, 1); const nn = lcOfMonth(next);
+  if(nn >= 1 && nn <= LC_N){ const w = soaSendWindow(next + '-15'); if(iso === w.sendBy) out.push({ kind: 'soa', text: 'Send SOAs for LC' + nn }); }
+  return out;
+}
+/* everything shown on one day */
+function dayItems(iso){
+  const f = SC.filters; const items = [];
+  eventsOn(iso).forEach(e => {
+    const t = EV_TYPES[e.type] || EV_TYPES.other;
+    if((t.cls === 'hol' && !f.holiday) || (t.cls !== 'hol' && !f.event)) return;
+    items.push({ cls: t.cls, text: e.title, title: t.label + (e.noClass ? ' · No classes' : '') + (e.time ? ' · ' + e.time : '') + (e.notes ? ' — ' + e.notes : ''), onclick: `openCalEvent('${e.id}')`, noClass: e.noClass });
+  });
+  if(f.birthday) birthdaysOn(iso).forEach(s => {
+    const age = Number(iso.slice(0, 4)) - Number(s.birthdate.slice(0, 4));
+    items.push({ cls: 'bday', text: '🎂 ' + (s.nickname || s.student.split(' ')[0]) + (age > 0 ? ' turns ' + age : ''), title: s.student + '’s birthday', onclick: `openStudentProfile('${s.id}')` });
+  });
+  const mk = makeupOn(iso);
+  if(mk && f.event) items.push({ cls: 'mku', text: 'Make-up class', title: mk.label || ('Make-up class for ' + fmtDate(mk.for)) });
+  if(f.lc && syConfigured()){
+    (SYC.data.lcRanges || []).forEach(r => {
+      if(r.start === iso) items.unshift({ cls: 'lcm', text: 'LC' + r.n + ' begins', title: 'Learning Cycle ' + r.n + ' (Module ' + moduleOf(r.n) + '): ' + fmtDate(r.start) + ' – ' + fmtDate(r.end) });
+      if(r.end === iso) items.push({ cls: 'lcm', text: 'LC' + r.n + ' ends', title: 'Learning Cycle ' + r.n + ' ends' });
+    });
+    (SYC.data.weekendModules || []).forEach(m => {
+      if(m.start === iso) items.push({ cls: 'lcm', text: 'Sat Module ' + m.k + ' begins', title: 'Saturday classes, Module ' + m.k + ': ' + fmtDate(m.start) + ' – ' + fmtDate(m.end) });
+    });
+  }
+  return items;
+}
+
+/* ---------- rendering ---------- */
+function scShift(d){ const a = SC.anchor; SC.anchor = new Date(a.getFullYear(), a.getMonth() + d, 1); renderSchoolCal(); }
+function scToday(){ SC.anchor = new Date(); renderSchoolCal(); }
+function scView(v){ SC.view = v; renderSchoolCal(); }
+function renderSchoolCal(){
+  const wrap = document.getElementById('sc-body'); if(!wrap) return;
+  document.querySelectorAll('.sc-view-btn').forEach(b => b.classList.toggle('on', b.dataset.v === SC.view));
+  document.querySelectorAll('.sc-f').forEach(b => b.classList.toggle('on', !!SC.filters[b.dataset.f]));
+  document.getElementById('sc-nav').style.visibility = SC.view === 'month' ? '' : 'hidden';
+  const today = isoToday();
+  if(SC.view === 'month'){
+    const first = new Date(SC.anchor.getFullYear(), SC.anchor.getMonth(), 1);
+    const ym = isoOf(first).slice(0, 7);
+    document.getElementById('sc-title').textContent = first.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const lcs = lcRangesInMonth(ym);
+    const shortD = iso => dateFromIso(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const band = !SC.filters.lc ? '' : lcs.length
+      ? `<div class="sc-band">${lcs.map(r => `<span class="lcpill${r.n === currentLC() ? ' cur' : ''}">LC${r.n}<small> · Module ${moduleOf(r.n)} · ${shortD(r.start)}–${shortD(r.end)}${r.n === currentLC() ? ' · now' : ''}</small></span>`).join('')}</div>`
+      : `<div class="sc-band off">No learning cycle this month</div>`;
+    const start = new Date(first); start.setDate(1 - ((first.getDay() + 6) % 7));
+    let cells = '';
+    for(let i = 0; i < 42; i++){
+      const d = new Date(start); d.setDate(start.getDate() + i);
+      if(i >= 35 && d.getMonth() !== first.getMonth()) break;
+      const iso = isoOf(d); const inM = d.getMonth() === first.getMonth();
+      const items = inM ? dayItems(iso) : [];
+      const nc = inM && noClassEvent(iso);
+      cells += `<div class="sc-cell${inM ? '' : ' out'}${iso === today ? ' today' : ''}${nc ? ' noclass' : ''}${d.getDay() === 0 ? ' sun' : ''}" onclick="${inM ? `scCellTap('${iso}')` : ''}">
+        <div class="sc-d"><span>${d.getDate()}</span>${inM ? `<button class="sc-add" title="Add event" onclick="openCalEvent(null,'${iso}')">+</button>` : ''}</div>
+        <div class="sc-items">${items.slice(0, 4).map(it => `<div class="sc-it ${it.cls}" title="${escapeHtml(it.title || it.text)}" ${it.onclick ? `onclick="event.stopPropagation();${it.onclick}"` : ''}>${escapeHtml(it.text)}</div>`).join('')}
+        ${items.length > 4 ? `<div class="sc-more" onclick="event.stopPropagation();scDay('${iso}')">+${items.length - 4} more</div>` : ''}</div>
+        ${items.length ? `<div class="sc-dots">${items.slice(0, 5).map(it => `<i class="${it.cls}"></i>`).join('')}</div>` : ''}
+      </div>`;
+    }
+    wrap.innerHTML = band + `<div class="sc-grid">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x => `<div class="sc-h">${x}</div>`).join('')}${cells}</div>`;
+  } else {
+    const { from, to } = schoolYearRange();
+    document.getElementById('sc-title').textContent = (Years && Years.label ? Years.label : 'School year') + ' at a glance';
+    let html = '';
+    for(let ym = from; ym <= to; ym = addMonthsYM(ym, 1)){
+      const [y, m] = ym.split('-').map(Number); const last = new Date(y, m, 0).getDate();
+      const rows = [];
+      for(let d = 1; d <= last; d++){ const iso = ym + '-' + pad2(d); dayItems(iso).forEach(it => rows.push({ iso, it })); }
+      const lcs = lcRangesInMonth(ym);
+      html += `<div class="sc-month"><div class="sc-mh">${escapeHtml(monthLabel(ym))}${SC.filters.lc ? lcs.map(r => ` <span class="tag blue">LC${r.n}</span>`).join('') : ''}</div>
+        ${rows.length ? rows.map(r => `<div class="sc-row"><span class="sc-date">${escapeHtml(dateFromIso(r.iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }))}</span><span class="sc-it ${r.it.cls}" ${r.it.onclick ? `onclick="${r.it.onclick}"` : ''}>${escapeHtml(r.it.text)}</span>${r.it.noClass ? '<span class="arch-meta">No classes</span>' : ''}</div>`).join('') : '<p class="empty" style="margin:6px 0 0;">Nothing scheduled.</p>'}
+      </div>`;
+    }
+    wrap.innerHTML = html;
+  }
+  const cnt = document.getElementById('sc-count');
+  if(cnt) cnt.textContent = SC.events.length ? SC.events.length + ' event' + (SC.events.length === 1 ? '' : 's') + ' entered' : 'No events entered yet';
+}
+function scCellTap(iso){ if(window.matchMedia('(max-width: 640px)').matches || !dayItems(iso).length) scDay(iso); }
+function scDay(iso){
+  const items = dayItems(iso);
+  document.getElementById('modal-root').innerHTML = `<div class="modal-overlay" onclick="if(event.target===this) closeModal()"><div class="modal">
+    <h3>${escapeHtml(dateFromIso(iso).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }))}</h3>${items.length ? '' : '<p class="empty">Nothing scheduled.</p>'}${items.map(it => `<div class="sc-it ${it.cls}" style="margin-bottom:6px;" ${it.onclick ? `onclick="${it.onclick}"` : ''}>${escapeHtml(it.text)}</div>`).join('')}
+    <div class="modal-close-row"><button class="btn" onclick="closeModal()">Close</button><button class="btn solid" onclick="openCalEvent(null,'${iso}')">+ Add event</button></div></div></div>`;
+}
+
+/* ---------- add / edit ---------- */
+function openCalEvent(id, dateIso){
+  const e = id ? SC.events.find(x => x.id === id) : { type: 'event', start: dateIso || isoToday(), end: '', noClass: false, programs: [] };
+  if(!e) return;
+  const progs = [...new Set(Dir.list.map(s => s.program).filter(Boolean))].sort((a,b) => progRank(a) - progRank(b) || a.localeCompare(b));
+  document.getElementById('modal-root').innerHTML = `<div class="modal-overlay" onclick="if(event.target===this) closeModal()"><div class="modal">
+    <h3>${id ? 'Edit event' : 'Add to the school calendar'}</h3>
+    <div class="field"><label>Title</label><input type="text" id="ce-title" value="${escapeHtml(e.title || '')}" placeholder="e.g. Family Day, Christmas break, Parent talk"></div>
+    <div class="field-row" style="margin-top:10px;">
+      <div class="field"><label>Type</label><select id="ce-type">${Object.entries(EV_TYPES).map(([k, t]) => `<option value="${k}" ${e.type === k ? 'selected' : ''}>${t.label}</option>`).join('')}</select></div>
+      <div class="field"><label>Time (optional)</label><input type="text" id="ce-time" value="${escapeHtml(e.time || '')}" placeholder="e.g. 9:00–11:00 AM"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Date</label><input type="date" id="ce-start" value="${escapeHtml(e.start || '')}"></div>
+      <div class="field"><label>Until (for several days)</label><input type="date" id="ce-end" value="${escapeHtml(e.end || '')}"></div>
+    </div>
+    <div class="check-row"><input type="checkbox" id="ce-noclass" ${e.noClass ? 'checked' : ''}><label for="ce-noclass">No classes on these days</label></div>
+    <div class="field" style="margin-top:10px;"><label>Applies to</label>
+      <div class="day-picks"><label><input type="checkbox" id="ce-all" ${!e.programs || !e.programs.length ? 'checked' : ''}> Whole school</label>
+      ${progs.map(p => `<label><input type="checkbox" class="ce-prog" value="${escapeHtml(p)}" ${(e.programs || []).includes(p) ? 'checked' : ''}> ${escapeHtml(p.replace(/\s*(Playgroup|Class)$/i, ''))}</label>`).join('')}</div></div>
+    <div class="field" style="margin-top:10px;"><label>Notes</label><textarea id="ce-notes">${escapeHtml(e.notes || '')}</textarea></div>
+    <div class="modal-close-row">
+      ${id ? `<button class="btn danger" style="margin-right:auto;" onclick="delCalEvent('${id}')">Delete</button>` : ''}
+      <button class="btn" onclick="closeModal()">Cancel</button><button class="btn solid" id="ce-save">Save</button>
+    </div></div></div>`;
+  const typeSel = document.getElementById('ce-type');
+  typeSel.addEventListener('change', () => { document.getElementById('ce-noclass').checked = !!(EV_TYPES[typeSel.value] || {}).noClass; });
+  document.querySelectorAll('.ce-prog').forEach(c => c.addEventListener('change', () => { if(c.checked) document.getElementById('ce-all').checked = false; }));
+  document.getElementById('ce-all').addEventListener('change', ev => { if(ev.target.checked) document.querySelectorAll('.ce-prog').forEach(c => c.checked = false); });
+  document.getElementById('ce-save').addEventListener('click', async () => {
+    const g = x => document.getElementById(x).value.trim();
+    if(!g('ce-title') || !g('ce-start')){ notify('Enter a title and a date.'); return; }
+    let end = g('ce-end'); if(end && end < g('ce-start')) end = '';
+    const rec = { id: id || uid(), title: g('ce-title'), type: g('ce-type'), start: g('ce-start'), end: end && end !== g('ce-start') ? end : '',
+      time: g('ce-time'), noClass: document.getElementById('ce-noclass').checked, notes: document.getElementById('ce-notes').value.trim(),
+      programs: document.getElementById('ce-all').checked ? [] : [...document.querySelectorAll('.ce-prog:checked')].map(c => c.value) };
+    if(await calSave(rec)){ closeModal(); notify('Saved to the school calendar.'); }
+  });
+}
+async function delCalEvent(id){ if(await askConfirm('Delete this event from the school calendar?')){ await calDelete(id); closeModal(); } }
+
+/* ---------- bulk add ---------- */
+const MON = { jan:1, feb:2, mar:3, apr:4, may:5, jun:6, jul:7, aug:8, sep:9, sept:9, oct:10, nov:11, dec:12 };
+function parseLooseDate(t, fallbackYear){
+  t = t.trim().replace(/,/g, ' ').replace(/\s+/g, ' ');
+  let m;
+  if((m = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))) return m[1] + '-' + pad2(+m[2]) + '-' + pad2(+m[3]);
+  if((m = t.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/))){ let y = m[3] ? +m[3] : fallbackYear(+m[1]); if(y < 100) y += 2000; return y + '-' + pad2(+m[1]) + '-' + pad2(+m[2]); }
+  if((m = t.match(/^([a-z]{3,9})\.? (\d{1,2})(?: (\d{4}))?$/i)) && MON[m[1].slice(0, 4).toLowerCase().replace(/[^a-z]/g,'')] || (m && MON[m[1].slice(0,3).toLowerCase()])){
+    const mo = MON[m[1].slice(0, 3).toLowerCase()]; const y = m[3] ? +m[3] : fallbackYear(mo); return y + '-' + pad2(mo) + '-' + pad2(+m[2]);
+  }
+  return '';
+}
+function syYear(mo){ const [y0, m0] = lc1Month().split('-').map(Number); return mo >= m0 - 1 ? y0 : y0 + 1; }
+function parseBulkLine(line){
+  const raw = line.trim(); if(!raw) return null;
+  const parts = raw.split(/\s*[|\t]\s*|\s+[-–—:]\s+/);
+  if(parts.length < 2) return { error: raw };
+  let datePart = parts[0], title = parts.slice(1).join(' — ').trim();
+  let start = '', end = '';
+  const rng = datePart.split(/\s+(?:to|until)\s+|\s*[–~]\s*/i);
+  start = parseLooseDate(rng[0], syYear);
+  if(rng[1]){ end = parseLooseDate(/^\d{1,2}$/.test(rng[1].trim()) ? rng[0].replace(/\d{1,2}(?=\D*$)/, rng[1].trim()) : rng[1], syYear); }
+  if(!start || !title) return { error: raw };
+  const low = title.toLowerCase();
+  const type = /holiday|day off|walang pasok/.test(low) ? 'holiday' : /break|no class|vacation|suspend/.test(low) ? 'noclass' : /deadline|due|reminder|enrol/.test(low) ? 'deadline' : /meeting|conference|orientation|talk/.test(low) ? 'meeting' : 'event';
+  return { start, end: end && end > start ? end : '', title, type, noClass: EV_TYPES[type].noClass };
+}
+function openCalBulk(){
+  document.getElementById('modal-root').innerHTML = `<div class="modal-overlay" onclick="if(event.target===this) closeModal()"><div class="modal wide">
+    <h3>Add many dates at once</h3>
+    <p class="hint">One per line: date, then a dash, colon or tab, then the title. Date ranges work too. Examples:<br>
+    <code>Aug 28 – Family Day</code> · <code>2026-10-26 to 2026-10-30 – Semestral break</code> · <code>12/18 – Christmas program</code> · <code>Dec 21 to Jan 3 – Christmas break</code><br>
+    Words like "holiday", "break" or "no class" mark the day as no classes. You can paste straight from a spreadsheet (date in one column, title in the next).</p>
+    <textarea id="cb-text" style="min-height:220px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;"></textarea>
+    <div id="cb-preview" class="hint" style="margin-top:8px;"></div>
+    <div class="modal-close-row"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn" id="cb-check">Preview</button><button class="btn solid" id="cb-save">Add to calendar</button></div>
+  </div></div>`;
+  const run = () => { const rows = document.getElementById('cb-text').value.split('\n').map(parseBulkLine).filter(Boolean); const ok = rows.filter(r => !r.error), bad = rows.filter(r => r.error);
+    document.getElementById('cb-preview').innerHTML = ok.map(r => `✓ ${escapeHtml(fmtDate(r.start))}${r.end ? ' – ' + escapeHtml(fmtDate(r.end)) : ''} · ${escapeHtml(r.title)} <span class="arch-meta">(${EV_TYPES[r.type].label}${r.noClass ? ', no classes' : ''})</span>`).join('<br>') + (bad.length ? `<br><span style="color:var(--coral)">Couldn't read: ${bad.map(b => escapeHtml(b.error)).join(' · ')}</span>` : '');
+    return ok; };
+  document.getElementById('cb-check').addEventListener('click', run);
+  document.getElementById('cb-save').addEventListener('click', async () => {
+    const ok = run(); if(!ok.length){ notify('Nothing to add yet.'); return; }
+    for(const r of ok) await calSave(Object.assign({ id: uid(), time: '', notes: '', programs: [] }, r));
+    closeModal(); notify('Added ' + ok.length + ' date' + (ok.length === 1 ? '' : 's') + ' to the school calendar.');
+  });
+}
+async function addPhHolidays(){
+  const have = new Set(SC.events.filter(e => e.type === 'holiday').map(e => e.start));
+  const todo = PH_HOLIDAYS_SY2627.filter(h => !have.has(h[0]));
+  if(!todo.length){ notify('The 2026–2027 Philippine holidays are already on the calendar.'); return; }
+  if(!await askConfirm('Add ' + todo.length + ' Philippine national holidays for June 2026 – April 2027 (Proclamations 1006 and 1427)? They are shown as holidays only; classes stay as scheduled unless you tick "No classes" on a date.', 'Add holidays')) return;
+  for(const h of todo) await calSave({ id: 'ph' + h[0].replace(/-/g, ''), title: h[1], type: 'holiday', start: h[0], end: '', time: '', noClass: false, programs: [], notes: h[2] });
+  notify('Added ' + todo.length + ' holidays. Eid’l Fitr and Eid’l Adha are declared separately — add them when announced.');
+}
+function initSchoolCalUi(){
+  document.getElementById('sc-prev').addEventListener('click', () => scShift(-1));
+  document.getElementById('sc-next').addEventListener('click', () => scShift(1));
+  document.getElementById('sc-today').addEventListener('click', scToday);
+  document.querySelectorAll('.sc-view-btn').forEach(b => b.addEventListener('click', () => scView(b.dataset.v)));
+  document.querySelectorAll('.sc-f').forEach(b => b.addEventListener('click', () => { SC.filters[b.dataset.f] = !SC.filters[b.dataset.f]; renderSchoolCal(); }));
+  document.getElementById('sc-addone').addEventListener('click', () => openCalEvent(null, isoToday()));
+  document.getElementById('sc-bulk').addEventListener('click', openCalBulk);
+  document.getElementById('sc-ph').addEventListener('click', addPhHolidays);
+  document.getElementById('sc-setup').addEventListener('click', openSySetup);
+  renderSchoolCal();
+}
+
 
 /* ============================= SHARED SETTINGS (Vercel/Firebase) ============================= */
 /* Rates, add-ons, misc. fees, SOA letter/bank details and the next invoice number are shared by all staff. */
@@ -3866,6 +4392,8 @@ async function importYearSnapshot(snap){
     if(Att.db){ for(const iso of Object.keys(days)) await Att.db.doc('attendance/' + iso).set(Object.assign({ date: iso }, days[iso])); }
     else { state.attendance = Object.assign({}, state.attendance || {}, days); }
     Att.byDate = Object.assign({}, Att.byDate, days);
+    if(Array.isArray(snap.calendar)){ notify('Importing the school calendar…'); for(const ev of snap.calendar) await calSave(Object.assign({}, ev)); }
+    if(snap.schoolYear) await sySave(snap.schoolYear);
     if(snap.cycle && (snap.cycle.label || snap.cycle.lcNo)) await cycleSave(Object.assign({ label:'', start:'', end:'', due:'', lcNo:null }, snap.cycle));
     if(snap.label) await yearLabelSave(snap.label);
     if(snap.settings){
@@ -3889,6 +4417,7 @@ initHome();
 initAttendanceUi();
 initLcUi();
 initYearUi();
+initSchoolCalUi();
 </script>
 </body>
 </html>
