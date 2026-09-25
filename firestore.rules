@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// ELLabs Hub — Firestore security rules
+// Only the Google accounts listed below can open the hub or read/change any data.
+// To add or remove a staff member: edit the list, then click "Publish"
+// (Firebase console → Firestore Database → Rules).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in [
+          'replace-with-admin@gmail.com',
+          'replace-with-teacher@gmail.com'
+        ];
+    }
+
+    match /{document=**} {
+      allow read, write: if isStaff();
+    }
+  }
+}
