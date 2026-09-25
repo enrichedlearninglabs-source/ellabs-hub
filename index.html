@@ -234,7 +234,8 @@
   table.att-tbl th:last-child{text-align:center;}
   table.att-tbl .bad{color:var(--coral);font-weight:800;} table.att-tbl .muted{color:var(--ink-soft);}
   .linkish{font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:7px;text-align:left;}
-  .linkish:hover{color:var(--blue);}
+  .linkish:hover{color:var(--blue);text-decoration:underline;text-underline-offset:3px;}
+  .name-link{color:var(--ink);}
   .cal-dh.clickable{cursor:pointer;border-radius:6px;}
   .cal-dh.clickable:hover{background:color-mix(in srgb, var(--blue) 10%, transparent);}
   .cal-att{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin:0 3px 4px 0;background:color-mix(in srgb, var(--green) 18%, transparent);color:color-mix(in srgb, var(--green) 70%, var(--ink));}
@@ -283,6 +284,17 @@
   .prog-mix span{display:inline-flex;align-items:center;gap:7px;}
   .prog-mix i{width:9px;height:9px;border-radius:50%;display:inline-block;}
   .prog-mix b{color:var(--ink);}
+  details.sf-more{margin:12px 0 4px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--bg);}
+  details.sf-more summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--blue);}
+  details.sf-more[open] summary{margin-bottom:10px;}
+  .name-link{font-size:14.5px;font-weight:800;}
+  .profile-grid{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;font-size:13.5px;margin:6px 0 4px;}
+  .profile-grid .k{color:var(--ink-soft);font-size:12px;font-weight:700;padding-top:2px;}
+  .profile-sec{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+  .profile-sec h4{margin:0 0 10px;}
+  .profile-sec:first-of-type{margin-top:8px;padding-top:0;border-top:none;}
+  .care-box{background:color-mix(in srgb, var(--coral) 7%, var(--card));border:1px solid color-mix(in srgb, var(--coral) 25%, var(--line));border-radius:10px;padding:10px 12px;}
+  @media (max-width:560px){ .profile-grid{grid-template-columns:1fr;gap:2px;} .profile-grid .k{padding-top:8px;} }
   #login{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;}
   #login.hidden{display:none;}
   #login .box{max-width:380px;width:100%;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px;box-shadow:0 6px 24px rgba(0,0,0,.08);}
@@ -1816,7 +1828,7 @@ function renderArchive(){
     <div class="arch-row">
       <div class="arch-main">
         <div class="arch-inv">Invoice ${escapeHtml(a.invoiceNo)} · ${escapeHtml(fmtDate(a.invoiceDate))} <span class="tag ${soaStatus(a).cls}">${soaStatus(a).label}</span></div>
-        <div><strong>${escapeHtml(a.student)}</strong> <span class="arch-meta">— ${escapeHtml(a.parent)}</span></div>
+        <div>${nameLink(a.student, a.studentId)} <span class="arch-meta">— ${escapeHtml(a.parent)}</span></div>
         <div class="arch-meta">${escapeHtml(a.program || '')}${a.module ? ' · ' + escapeHtml(a.module) : ''} · due ${escapeHtml(fmtDate(a.dueDate))}</div>
       </div>
       <span class="arch-amt">${peso(a.total)}${soaBalance(a) > 0 && soaPaid(a) > 0 ? `<br><span class="arch-meta">bal. ${peso(soaBalance(a))}</span>` : ''}</span>
@@ -2008,7 +2020,7 @@ function renderDirectory(){
   const q = (document.getElementById('d-search').value || '').toLowerCase().trim();
   const pf = progSel.value;
   const items = Dir.list.filter(s => (!pf || s.program === pf) &&
-    (!q || [s.student, s.parent, s.contact, s.email].some(v => (v || '').toLowerCase().includes(q))));
+    (!q || [s.student, s.nickname, s.parent, s.contact, s.email, s.motherName, s.fatherName].some(v => (v || '').toLowerCase().includes(q))));
   document.getElementById('d-count').textContent = items.length + ' of ' + Dir.list.length + ' student' + (Dir.list.length === 1 ? '' : 's');
   if(!items.length){ list.innerHTML = `<p class="empty">${Dir.list.length ? 'No matches.' : 'No students yet — add one below.'}</p>`; return; }
   list.innerHTML = items.map(s => {
@@ -2017,7 +2029,7 @@ function renderDirectory(){
                   resvText(s.reservation) ? `<span class="tag green">Reservation ${resvText(s.reservation)}</span>` : ''].join('');
     return `<div class="arch-row">
       <div class="arch-main">
-        <div><strong>${escapeHtml(s.student)}</strong> ${tags} ${studentFlags(s)}</div>
+        <div><button class="linkish name-link" onclick="openStudentProfile('${s.id}')">${escapeHtml(s.student)}</button>${s.nickname ? ' <span class="arch-meta">“' + escapeHtml(s.nickname) + '”</span>' : ''}${ageText(s.birthdate) ? ' <span class="arch-meta">· ' + ageText(s.birthdate) + '</span>' : ''} ${tags} ${hasCareNote(s) ? '<span class="tag red" title="Health or care note on file">Care note</span>' : ''} ${studentFlags(s)}</div>
         <div class="arch-meta">${escapeHtml(s.parent || '')}${s.contact ? ' · ' + escapeHtml(s.contact) : ''}</div>
         ${meta ? `<div class="arch-meta">${meta}</div>` : ''}
       </div>
@@ -2040,7 +2052,24 @@ function openStudentForm(id, prefill){
       <div class="modal">
         <h3>${id ? 'Edit student' : 'Add student'}</h3>
         <div class="field"><label>Student's full name</label><input type="text" id="sf-student" value="${v('student')}"></div>
-        <div class="field" style="margin-top:8px;"><label>Parent / guardian name(s)</label><input type="text" id="sf-parent" value="${v('parent')}"></div>
+        <div class="field-row" style="margin-top:8px;">
+          <div class="field"><label>Nickname</label><input type="text" id="sf-nick" value="${v('nickname')}"></div>
+          <div class="field"><label>Birthday</label><input type="date" id="sf-bday" value="${v('birthdate')}"></div>
+        </div>
+        <div class="field"><label>Parent / guardian name(s) — shown on SOAs</label><input type="text" id="sf-parent" value="${v('parent')}"></div>
+        <details class="sf-more" ${s.motherName || s.fatherName || s.health || s.address ? 'open' : ''}>
+          <summary>Family, health &amp; other details</summary>
+          <div class="field-row"><div class="field"><label>Mother's name</label><input type="text" id="sf-mname" value="${v('motherName')}"></div><div class="field"><label>Mother's contact no.</label><input type="text" id="sf-mphone" value="${v('motherPhone')}"></div><div class="field"><label>Mother's email</label><input type="text" id="sf-memail" value="${v('motherEmail')}"></div></div>
+          <div class="field"><label>Mother — Facebook / IG</label><input type="text" id="sf-msocial" value="${v('motherSocial')}"></div>
+          <div class="field-row" style="margin-top:10px;"><div class="field"><label>Father's name</label><input type="text" id="sf-fname" value="${v('fatherName')}"></div><div class="field"><label>Father's contact no.</label><input type="text" id="sf-fphone" value="${v('fatherPhone')}"></div><div class="field"><label>Father's email</label><input type="text" id="sf-femail" value="${v('fatherEmail')}"></div></div>
+          <div class="field"><label>Father — Facebook / IG</label><input type="text" id="sf-fsocial" value="${v('fatherSocial')}"></div>
+          <div class="field-row" style="margin-top:10px;"><div class="field"><label>Primary contact</label><select id="sf-primary">${['', 'mom', 'dad', 'Both'].map(o => `<option value="${o}" ${(s.primaryContact || '').toLowerCase() === o.toLowerCase() ? 'selected' : ''}>${o === '' ? '—' : o === 'mom' ? 'Mom' : o === 'dad' ? 'Dad' : 'Both'}</option>`).join('')}</select></div><div class="field"><label>Religion</label><input type="text" id="sf-religion" value="${v('religion')}"></div></div>
+          <div class="field"><label>Address</label><input type="text" id="sf-address" value="${v('address')}"></div>
+          <div class="field" style="margin-top:10px;"><label>Health concerns</label><input type="text" id="sf-health" value="${v('health')}"></div>
+          <div class="field" style="margin-top:8px;"><label>Special instructions</label><textarea id="sf-instr">${v('instructions')}</textarea></div>
+          <div class="field-row" style="margin-top:8px;"><div class="field"><label>Special needs</label><input type="text" id="sf-sneeds" value="${v('specialNeeds')}"></div><div class="field"><label>Pediatrician</label><input type="text" id="sf-pedia" value="${v('pediatrician')}"></div></div>
+          <div class="field"><label>In case of emergency</label><input type="text" id="sf-emerg" value="${v('emergency')}"></div>
+        </details>
         <div class="field-row" style="margin-top:8px;">
           <div class="field"><label>Contact no.</label><input type="text" id="sf-contact" value="${v('contact')}"></div>
           <div class="field"><label>Email</label><input type="text" id="sf-email" value="${v('email')}"></div>
@@ -2088,6 +2117,10 @@ function openStudentForm(id, prefill){
     const rec = { id: id || uid(), student: g('sf-student'), parent: g('sf-parent'), contact: g('sf-contact'), email: g('sf-email'),
       program: g('sf-program'), paymentTerms: g('sf-terms'), schedule: g('sf-schedule'), studentType: g('sf-type'),
       reservation: resv === '' ? '' : (parseFloat(resv) || 0), notes: document.getElementById('sf-notes').value,
+      nickname: g('sf-nick'), birthdate: g('sf-bday'), motherName: g('sf-mname'), motherPhone: g('sf-mphone'), motherEmail: g('sf-memail'), motherSocial: g('sf-msocial'),
+      fatherName: g('sf-fname'), fatherPhone: g('sf-fphone'), fatherEmail: g('sf-femail'), fatherSocial: g('sf-fsocial'), primaryContact: g('sf-primary'),
+      religion: g('sf-religion'), address: g('sf-address'), health: g('sf-health'), instructions: document.getElementById('sf-instr').value.trim(),
+      specialNeeds: g('sf-sneeds'), pediatrician: g('sf-pedia'), emergency: g('sf-emerg'),
       days: [...document.querySelectorAll('.sf-day:checked')].map(c => c.value), time: g('sf-time'), status: g('sf-status') || 'Active',
       scheme: g('sf-scheme'), rateProgram: g('sf-rateprog'), bundle: document.getElementById('sf-bundle').checked,
       customPlan: (() => { const items = [...document.querySelectorAll('#sf-cp .cp-row')].map(r => ({ due: r.querySelector('.cp-d').value, amount: parseFloat(r.querySelector('.cp-a').value) || 0, label: r.querySelector('.cp-l').value.trim() })).filter(x => x.due && x.amount > 0).sort((a,b) => a.due.localeCompare(b.due)); return items.length ? { items } : null; })() };
@@ -2127,8 +2160,57 @@ function startSoaFor(id){
   fillDraftFromBilling(s, nextBillLC());
 }
 
+
+/* ---------- family profile ---------- */
+function nameLink(name, sid){
+  const s = sid ? findStudent(sid) : findStudentByName('student', name);
+  return s ? `<button class="linkish name-link" onclick="openStudentProfile('${s.id}')">${escapeHtml(name)}</button>` : `<strong>${escapeHtml(name)}</strong>`;
+}
+function ageText(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-').map(Number); const now = new Date();
+  let months = (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m) - (now.getDate() < d ? 1 : 0);
+  if(months < 0) return '';
+  const yrs = Math.floor(months / 12), mo = months % 12;
+  return yrs ? yrs + ' yr' + (yrs === 1 ? '' : 's') + (mo ? ' ' + mo + ' mo' : '') : mo + ' mo';
+}
+function hasCareNote(s){ return !!((s.health && !/^(n\/?a|none)$/i.test(s.health)) || (s.instructions && !/^(n\/?a|none)$/i.test(s.instructions)) || (s.specialNeeds && /yes/i.test(s.specialNeeds))); }
+function linkify(v){ const t = escapeHtml(v || ''); return t.replace(/(https?:\/\/[^\s|]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+function openStudentProfile(id){
+  const s = findStudent(id); if(!s) return;
+  const row = (k, v, raw) => v ? `<div class="k">${k}</div><div>${raw ? v : escapeHtml(v).replace(/\n/g, '<br>')}</div>` : '';
+  const pc = (s.primaryContact || '').toLowerCase();
+  const care = [row('Health concerns', s.health), row('Special instructions', s.instructions), row('Special needs', s.specialNeeds), row('Pediatrician', s.pediatrician), row('In an emergency', s.emergency)].join('');
+  document.getElementById('modal-root').innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this) closeModal()">
+      <div class="modal wide">
+        <h3 style="margin-bottom:2px;">${escapeHtml(s.student)}${s.nickname ? ' <span class="arch-meta" style="font-size:14px;">“' + escapeHtml(s.nickname) + '”</span>' : ''}</h3>
+        <p class="hint">${escapeHtml(s.program || '')}${studentDays(s).length ? ' · ' + escapeHtml(studentDays(s).join(', ')) : ''}${studentTime(s) ? ' · ' + escapeHtml(studentTime(s)) : ''}</p>
+        <div class="profile-sec"><div class="profile-grid">
+          ${row('Birthday', s.birthdate ? fmtDate(s.birthdate) + (ageText(s.birthdate) ? ' (' + ageText(s.birthdate) + ')' : '') : '')}
+          ${row('Status', s.status || 'Active')}${row('Student type', s.studentType)}${row('Religion', s.religion)}${row('Address', s.address)}
+        </div></div>
+        <div class="profile-sec"><h4>Family</h4><div class="profile-grid">
+          ${row('Mother' + (pc === 'mom' ? ' · primary' : ''), [s.motherName, s.motherPhone, s.motherEmail].filter(Boolean).join(' · '))}
+          ${row('Mother — social', s.motherSocial ? linkify(s.motherSocial) : '', true)}
+          ${row('Father' + (pc === 'dad' ? ' · primary' : ''), [s.fatherName, s.fatherPhone, s.fatherEmail].filter(Boolean).join(' · '))}
+          ${row('Father — social', s.fatherSocial ? linkify(s.fatherSocial) : '', true)}
+          ${!s.motherName && !s.fatherName ? row('Parent / guardian', [s.parent, s.contact, s.email].filter(Boolean).join(' · ')) : ''}
+          ${row('Primary contact', s.primaryContact ? (pc === 'both' ? 'Both parents' : pc === 'mom' ? 'Mom' : pc === 'dad' ? 'Dad' : s.primaryContact) : '')}
+        </div></div>
+        ${care ? `<div class="profile-sec"><h4>Health &amp; care</h4><div class="care-box"><div class="profile-grid">${care}</div></div></div>` : ''}
+        ${s.notes ? `<div class="profile-sec"><h4>Notes</h4><p style="margin:0;font-size:13.5px;">${escapeHtml(s.notes).replace(/\n/g,'<br>')}</p></div>` : ''}
+        <div class="modal-close-row">
+          <button class="btn" onclick="closeModal()">Close</button>
+          <button class="btn" onclick="closeModal();openStudentPayment('${s.id}')">Payments</button>
+          <button class="btn solid" onclick="closeModal();openStudentForm('${s.id}')">Edit</button>
+        </div>
+      </div>
+    </div>`;
+}
+
 async function exportDirectoryCsv(){
-  const cols = [['student',"Student's name"],['parent','Parent / guardian'],['contact','Contact no.'],['email','Email'],['program','Program'],
+  const cols = [['student',"Student's name"],['nickname','Nickname'],['birthdate','Birthday'],['motherName',"Mother's name"],['motherPhone',"Mother's contact"],['motherEmail',"Mother's email"],['fatherName',"Father's name"],['fatherPhone',"Father's contact"],['fatherEmail',"Father's email"],['primaryContact','Primary contact'],['address','Address'],['religion','Religion'],['health','Health concerns'],['instructions','Special instructions'],['specialNeeds','Special needs'],['pediatrician','Pediatrician'],['emergency','In case of emergency'],['parent','Parent / guardian (SOA)'],['contact','Contact no.'],['email','Email'],['program','Program'],
                 ['paymentTerms','Payment terms'],['schedule','Schedule'],['studentType','Student type'],['reservation','Reservation paid'],['notes','Notes']];
   const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
   const csv = [cols.map(c => q(c[1])).join(',')].concat(Dir.list.map(s => cols.map(c => q(s[c[0]])).join(','))).join('\r\n');
@@ -2378,7 +2460,7 @@ function kidsOn(dateObj){
     .sort((a,b) => progRank(a.program) - progRank(b.program) || (a.program||'').localeCompare(b.program||'') || studentTime(a).localeCompare(studentTime(b)) || a.student.localeCompare(b.student));
 }
 function isoOf(d){ return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
-function shortName(n){ const p = (n || '').trim().split(/\s+/); return titleCase(p[0] || '') + (p.length > 1 ? ' ' + titleCase(p[p.length-1]).charAt(0) + '.' : ''); }
+function shortName(n, nick){ const p = (n || '').trim().split(/\s+/); return (nick ? nick : titleCase(p[0] || '')) + (p.length > 1 ? ' ' + titleCase(p[p.length-1]).charAt(0) + '.' : ''); }
 
 const Cal = { view: 'week', anchor: new Date() };
 function calShift(dir){
@@ -2429,7 +2511,7 @@ function renderCalendar(){
         ${dayMarkers(iso)}${calAttBadge(iso, kids)}
         ${kids.length ? Object.entries(groups).map(([t, list]) => `
           <div class="cal-time">${escapeHtml(t)}</div>
-          ${list.map(s => { const r = attGet(iso, s.id); return `<button class="cal-chip${r ? ' st-' + r.status : ''}" style="--c:${progColor(s.program)}" title="${escapeHtml(s.student + ' — ' + (s.program || '') + (r ? ' — ' + ATT_STATUSES.find(x => x.key === r.status).label : ''))}" onclick="openStudentForm('${s.id}')">${escapeHtml(shortName(s.student))}${r ? `<span class="st">${r.status}</span>` : ''}</button>`; }).join('')}`).join('')
+          ${list.map(s => { const r = attGet(iso, s.id); return `<button class="cal-chip${r ? ' st-' + r.status : ''}" style="--c:${progColor(s.program)}" title="${escapeHtml(s.student + ' — ' + (s.program || '') + (r ? ' — ' + ATT_STATUSES.find(x => x.key === r.status).label : ''))}" onclick="openStudentProfile('${s.id}')">${escapeHtml(shortName(s.student, s.nickname))}${r ? `<span class="st">${r.status}</span>` : ''}</button>`; }).join('')}`).join('')
           : '<div class="cal-empty">No classes</div>'}
       </div>`;
     }).join('');
@@ -2521,7 +2603,7 @@ function renderHome(){
       if(x.kind === 'sendsoa'){
         const lab2 = x.late ? ['SOA late','red'] : labels.sendsoa;
         return `<div class="alert-row ${lab2[1]}">
-          <div class="arch-main"><div><span class="tag ${lab2[1]}">${lab2[0]}</span> <strong>${escapeHtml(x.student)}</strong></div>
+          <div class="arch-main"><div><span class="tag ${lab2[1]}">${lab2[0]}</span> ${nameLink(x.student, x.stu && x.stu.id)}</div>
             <div class="arch-meta">${escapeHtml(x.parent || '')}</div><div class="arch-meta">${escapeHtml(x.detail)}</div></div>
           <span class="arch-amt">${peso(x.amount)}</span>
           <div class="actions"><button class="btn small solid" onclick="startSoaForLC('${x.stu.id}', ${x.lcN})">Create SOA</button>
@@ -2537,7 +2619,7 @@ function renderHome(){
            <button class="btn small" onclick="startSoaFor('${x.stu.id}')">Create SOA</button>`;
       return `<div class="alert-row ${cls}">
         <div class="arch-main">
-          <div><span class="tag ${cls}">${lab}</span> <strong>${escapeHtml(x.student)}</strong></div>
+          <div><span class="tag ${cls}">${lab}</span> ${nameLink(x.student, (x.stu && x.stu.id) || (x.soa && x.soa.studentId))}</div>
           <div class="arch-meta">${escapeHtml(x.parent || '')}</div>
           <div class="arch-meta">${escapeHtml(x.detail)}</div>
         </div>
@@ -2668,7 +2750,7 @@ function openAttendance(iso){ Att.date = iso; document.querySelector('.tab-btn[d
 function attRowHtml(s, iso, isExtra){
   const r = attGet(iso, s.id);
   return `<div class="att-row${r ? ' marked ' + r.status : ''}">
-    <div class="att-name"><i style="background:${progColor(s.program)}"></i><span>${escapeHtml(s.student)}${isExtra ? ' <span class="tag grey">Make-up / extra</span>' : ''}</span></div>
+    <div class="att-name"><i style="background:${progColor(s.program)}"></i><span><button class="linkish" onclick="openStudentProfile('${s.id}')">${escapeHtml(s.student)}</button>${isExtra ? ' <span class="tag grey">Make-up / extra</span>' : ''}</span></div>
     <div class="att-btns">${ATT_STATUSES.map(st => `<button class="att-b ${st.cls}${r && r.status === st.key ? ' on' : ''}" title="${st.label}" onclick="attClick('${iso}','${s.id}','${st.key}')">${st.label}</button>`).join('')}</div>
     <input type="text" class="att-note" placeholder="Note" value="${escapeHtml(r && r.note || '')}" onchange="attNote('${iso}','${s.id}', this.value)" ${r ? '' : 'disabled'}>
   </div>`;
@@ -3114,9 +3196,10 @@ function paymentStatusRows(students, cyc, opts){
   });
 }
 function directoryRows(students){
-  const head = ["Student's name",'Parent / guardian','Contact no.','Email','Program','Payment scheme','Class days','Class time','Student type','Status','Reservation paid','Notes'];
+  const extra = [['nickname','Nickname'],['birthdate','Birthday'],['motherName',"Mother's name"],['motherPhone',"Mother's contact"],['motherEmail',"Mother's email"],['fatherName',"Father's name"],['fatherPhone',"Father's contact"],['fatherEmail',"Father's email"],['primaryContact','Primary contact'],['address','Address'],['religion','Religion'],['health','Health concerns'],['instructions','Special instructions'],['specialNeeds','Special needs'],['pediatrician','Pediatrician'],['emergency','In case of emergency'],];
+  const head = ["Student's name"].concat(extra.map(c => c[1]), ['Parent / guardian (SOA)','Contact no.','Email','Program','Payment scheme','Class days','Class time','Student type','Status','Reservation paid','Notes']);
   return [head].concat(students.slice().sort((a,b) => progRank(a.program) - progRank(b.program) || a.student.localeCompare(b.student)).map(s =>
-    [s.student, s.parent || '', s.contact || '', s.email || '', s.program || '', s.scheme || s.paymentTerms || '', studentDays(s).join(', ') || s.schedule || '', studentTime(s), s.studentType || '', s.status || 'Active', s.reservation === '' || s.reservation == null ? '' : Number(s.reservation), s.notes || '']));
+    [s.student].concat(extra.map(c => s[c[0]] || ''), [s.parent || '', s.contact || '', s.email || '', s.program || '', s.scheme || s.paymentTerms || '', studentDays(s).join(', ') || s.schedule || '', studentTime(s), s.studentType || '', s.status || 'Active', s.reservation === '' || s.reservation == null ? '' : Number(s.reservation), s.notes || ''])));
 }
 function soaRows(soas){
   const head = ['Invoice No.','Invoice date','Due date','Student','Parent','Program / plan','Learning cycle / Module','Total','Paid','Balance','Status'];
@@ -3354,6 +3437,7 @@ function schemeKind(s){
   return '';
 }
 function weekdayCount(s){ return studentDays(s).filter(d => ['Mon','Tue','Wed','Thu','Fri'].includes(d)).length; }
+function classesPerWeek(s){ return studentDays(s).filter(d => d !== 'Sun').length; }
 function isKinder(s){ return /kindergarten/i.test(s.program || ''); }
 function findProgByName(name){ return state.programs.find(p => p.name === name); }
 function pickPlan(prog, kind){
@@ -3391,8 +3475,8 @@ function rateFor(s){
       const wd = weekdayCount(s), sat = studentDays(s).includes('Sat');
       if(wd === 0 && sat) prog = state.programs.find(p => /weekend|saturday/i.test(p.name));
       else if(wd > 0){
-        prog = state.programs.find(p => /weekday/i.test(p.name) && new RegExp('\\b' + wd + 'x').test(p.name));
-        if(sat) warn.push('Attends weekdays and Saturday — billed at the ' + wd + 'x/week weekday rate');
+        const perWeek = wd + (sat ? 1 : 0);
+        prog = state.programs.find(p => /weekday/i.test(p.name) && new RegExp('\\b' + perWeek + 'x').test(p.name));
       }
       if(!prog) warn.push('No class days set, so the rate could not be worked out');
     }
@@ -3406,7 +3490,7 @@ function rateFor(s){
   if(prog && !plan && !monthlyFallback && kind) warn.push('No "' + (s.scheme || s.paymentTerms) + '" plan found under ' + prog.name);
   let bundle = null;
   if(s.bundle && !isKinder(s)){
-    const spc = weekdayCount(s) * 4;
+    const spc = classesPerWeek(s) * 4;
     const bp = state.programs.find(p => p.plans.some(pl => pl.type === 'bundle' && pl.sessionsPerCycle === spc));
     if(bp) bundle = { prog: bp, cycle: bp.plans.find(pl => pl.type === 'bundle' && !pl.lockCycles && pl.sessionsPerCycle === spc) || bp.plans.find(pl => pl.type === 'bundle'),
                       quarter: bp.plans.find(pl => pl.type === 'bundle' && pl.lockCycles === 3 && pl.sessionsPerCycle === spc) };
@@ -3595,6 +3679,7 @@ function openStudentMenu(sid){
         <div class="btn-row">
           <button class="btn solid" onclick="startSoaForLC('${s.id}', ${n})">Create SOA for LC${n}</button>
           <button class="btn" onclick="openStudentPayment('${s.id}')">Record payment</button>
+          <button class="btn" onclick="openStudentProfile('${s.id}')">View profile</button>
           <button class="btn" onclick="closeModal();openStudentForm('${s.id}')">Edit student &amp; billing details</button>
           <button class="btn" onclick="closeModal();openStudentAttendance('${s.id}')">Attendance</button>
         </div>
